@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.imooc.order.dao.OrderInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.imooc.order.entity.OrderInfo" >
+    <id column="oId" property="oid" jdbcType="INTEGER" />
+    <result column="oName" property="oname" jdbcType="VARCHAR" />
+    <result column="oState" property="ostate" jdbcType="INTEGER" />
+    <result column="oPrice" property="oprice" jdbcType="DOUBLE" />
+    <result column="oCount" property="ocount" jdbcType="INTEGER" />
+    <result column="oTotal" property="ototal" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oId, oName, oState, oPrice, oCount, oTotal
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.imooc.order.entity.OrderInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_info
+    where oId = #{oid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order_info
+    where oId = #{oid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.imooc.order.entity.OrderInfoExample" >
+    delete from order_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.imooc.order.entity.OrderInfo" >
+    insert into order_info (oId, oName, oState, 
+      oPrice, oCount, oTotal
+      )
+    values (#{oid,jdbcType=INTEGER}, #{oname,jdbcType=VARCHAR}, #{ostate,jdbcType=INTEGER}, 
+      #{oprice,jdbcType=DOUBLE}, #{ocount,jdbcType=INTEGER}, #{ototal,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.imooc.order.entity.OrderInfo" >
+    insert into order_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oId,
+      </if>
+      <if test="oname != null" >
+        oName,
+      </if>
+      <if test="ostate != null" >
+        oState,
+      </if>
+      <if test="oprice != null" >
+        oPrice,
+      </if>
+      <if test="ocount != null" >
+        oCount,
+      </if>
+      <if test="ototal != null" >
+        oTotal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="oname != null" >
+        #{oname,jdbcType=VARCHAR},
+      </if>
+      <if test="ostate != null" >
+        #{ostate,jdbcType=INTEGER},
+      </if>
+      <if test="oprice != null" >
+        #{oprice,jdbcType=DOUBLE},
+      </if>
+      <if test="ocount != null" >
+        #{ocount,jdbcType=INTEGER},
+      </if>
+      <if test="ototal != null" >
+        #{ototal,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.imooc.order.entity.OrderInfoExample" resultType="java.lang.Integer" >
+    select count(*) from order_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_info
+    <set >
+      <if test="record.oid != null" >
+        oId = #{record.oid,jdbcType=INTEGER},
+      </if>
+      <if test="record.oname != null" >
+        oName = #{record.oname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ostate != null" >
+        oState = #{record.ostate,jdbcType=INTEGER},
+      </if>
+      <if test="record.oprice != null" >
+        oPrice = #{record.oprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ocount != null" >
+        oCount = #{record.ocount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ototal != null" >
+        oTotal = #{record.ototal,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_info
+    set oId = #{record.oid,jdbcType=INTEGER},
+      oName = #{record.oname,jdbcType=VARCHAR},
+      oState = #{record.ostate,jdbcType=INTEGER},
+      oPrice = #{record.oprice,jdbcType=DOUBLE},
+      oCount = #{record.ocount,jdbcType=INTEGER},
+      oTotal = #{record.ototal,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.imooc.order.entity.OrderInfo" >
+    update order_info
+    <set >
+      <if test="oname != null" >
+        oName = #{oname,jdbcType=VARCHAR},
+      </if>
+      <if test="ostate != null" >
+        oState = #{ostate,jdbcType=INTEGER},
+      </if>
+      <if test="oprice != null" >
+        oPrice = #{oprice,jdbcType=DOUBLE},
+      </if>
+      <if test="ocount != null" >
+        oCount = #{ocount,jdbcType=INTEGER},
+      </if>
+      <if test="ototal != null" >
+        oTotal = #{ototal,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where oId = #{oid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.imooc.order.entity.OrderInfo" >
+    update order_info
+    set oName = #{oname,jdbcType=VARCHAR},
+      oState = #{ostate,jdbcType=INTEGER},
+      oPrice = #{oprice,jdbcType=DOUBLE},
+      oCount = #{ocount,jdbcType=INTEGER},
+      oTotal = #{ototal,jdbcType=DOUBLE}
+    where oId = #{oid,jdbcType=INTEGER}
+  </update>
+</mapper>
