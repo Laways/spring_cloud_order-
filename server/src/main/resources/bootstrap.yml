@@ -7,3 +7,8 @@ spring:
         service-id: CONFIG
         enabled: true
       profile: dev
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

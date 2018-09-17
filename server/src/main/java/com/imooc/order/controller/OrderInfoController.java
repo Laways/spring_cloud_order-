@@ -1,5 +1,6 @@
 package com.imooc.order.controller;
 
+import com.imooc.order.config.VersionConfig;
 import com.imooc.order.service.OrderInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +15,19 @@ public class OrderInfoController {
     private Logger log = LoggerFactory.getLogger(OrderInfoController.class);
 
     @Autowired
+    private VersionConfig versionConfig;
+
+    @Autowired
     private OrderInfoService orderInfoService;
 
     @GetMapping("/findAllOrders")
     public Object findAllOrders(){
         log.info("findAllOrder execute");
         return orderInfoService.findAllOrders();
+    }
+
+    @GetMapping("/testConfig")
+    public String testConfig(){
+        return versionConfig.getUser() + " " + versionConfig.getNumber();
     }
 }
